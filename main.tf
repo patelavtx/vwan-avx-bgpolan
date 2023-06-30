@@ -16,7 +16,7 @@ module "azure_native" {
 
 module "azure_transit" {
   source  = "terraform-aviatrix-modules/mc-transit/aviatrix"
-  version = "2.3.1"
+  version = "2.5.0"
 
   cloud                    = "azure"
   region                   = var.region
@@ -37,6 +37,11 @@ module "azure_transit" {
 #   firewall_image = "Palo Alto Networks VM-Series Next-Generation Firewall Bundle 1"
 # }
 
+# added deloy to allow s2c, but 60sec wasn't enough, re-apply worked, may need to increase timer?
+resource "time_sleep" "wait_60_seconds" {
+  create_duration = "60s"
+  depends_on = [ module.azure_native, module.azure_transit ]
+}
 
 resource "aviatrix_transit_external_device_conn" "vwan_to_avx" {
   vpc_id                    = module.azure_transit.vpc.vpc_id
@@ -52,6 +57,10 @@ resource "aviatrix_transit_external_device_conn" "vwan_to_avx" {
   remote_lan_ip             = tolist(module.azure_native.virtual_hub_ips)[0]
   backup_remote_lan_ip      = tolist(module.azure_native.virtual_hub_ips)[1]
   enable_bgp_lan_activemesh = true
+  depends_on = [ time_sleep.wait_60_seconds ]
 }
 
 
+/*
+subscriptions/e298c01b-5d42-46ed-8212-c6163b96e89c/resourceGroups/RG_bgpolan_hub_b4d74b29-1451-4fc9-8d3b-3a02603d54c6/providers/Microsoft.Network/virtualNetworks/HV_bgpolan_hub_9fc8f0e3-a423-4153-8d89-5f715e24b534
+*/

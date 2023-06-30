@@ -18,13 +18,13 @@ resource "azurerm_virtual_hub" "orsted_vwan_hub" {
 }
 
 resource "azurerm_virtual_hub_connection" "cnx_to_avx_transit" {
-  name                      = "cnx_to_avx_transit"
+  name                      = "testcnx_to_avx_transit"
   virtual_hub_id            = azurerm_virtual_hub.orsted_vwan_hub.id
   remote_virtual_network_id = var.avx_transit_vnet
 }
 
 resource "azurerm_virtual_hub_bgp_connection" "peer_avx_prim" {
-  name           = "peer_avx_prim"
+  name           = "testpeer_avx_prim"
   virtual_hub_id = azurerm_virtual_hub.orsted_vwan_hub.id
   peer_asn       = var.avx_transit_gateway_asn
   peer_ip        = var.avx_prim_gw_ip
@@ -33,7 +33,7 @@ resource "azurerm_virtual_hub_bgp_connection" "peer_avx_prim" {
 
 
 resource "azurerm_virtual_hub_bgp_connection" "peer_avx_ha" {
-  name           = "peer_avx_ha"
+  name           = "testpeer_avx_ha"
   virtual_hub_id = azurerm_virtual_hub.orsted_vwan_hub.id
   peer_asn       = var.avx_transit_gateway_asn
   peer_ip        = var.avx_ha_gw_ip

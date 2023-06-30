@@ -48,3 +48,19 @@ variable "backup_bgp_remote_as_num" {
 variable "vwan_avx_connection_name" {
   description = "vWAN to Avx connection name"
 }
+
+
+variable "avtx_controllerip" {
+  type = string
+  default = "4.234.106.246"
+}
+
+variable "avtx_admin_user" {
+  type = string
+  default = "admin"
+} 
+
+variable "avtx_admin_password" {
+  type = string
+  default = "Aviatrix123#"
+}
