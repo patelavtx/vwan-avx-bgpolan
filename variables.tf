@@ -52,7 +52,7 @@ variable "vwan_avx_connection_name" {
 
 variable "avtx_controllerip" {
   type = string
-  default = "4.234.106.246"
+  default = "40.113.136.12"
 }
 
 variable "avtx_admin_user" {

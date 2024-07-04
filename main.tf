@@ -17,7 +17,7 @@ module "azure_native" {
 module "azure_transit" {
   source  = "terraform-aviatrix-modules/mc-transit/aviatrix"
   version = "2.5.0"
-
+  name = "aztransit-bgpolan"
   cloud                    = "azure"
   region                   = var.region
   cidr                     = var.transit_cidr
